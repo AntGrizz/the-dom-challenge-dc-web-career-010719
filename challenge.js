@@ -8,7 +8,9 @@ let minus = document.querySelector('#\\-');
 let like = document.querySelector('#\\<3');
 let ulElement = document.querySelector('.likes');
 let pause = document.querySelector('#pause');
-let submitInput = document.querySelector('#submit');
+let commentForm = document.querySelector('form');
+let submit = document.querySelector('button#submit');
+let buttonsToggle = [minus, plus, like, submit];
 
 function incrementCounter() {
   counter.innerText = parseInt(counter.innerText) + 1;
@@ -21,10 +23,10 @@ function decrementCounter() {
 likes = {};
 
 function addLike() {
-  if (likes[counter.innerText]) {
-    likes[counter.innerText] += 1;
+  if (counter in likes) {
+    likes[counter]++;
   } else {
-    likes[counter.innerText] = 1;
+    likes[counter] = 1;
   }
 
   ulElement.innerText = '';
@@ -43,9 +45,11 @@ function addLike() {
 function interrupt() {
   if (pause.innerText === 'pause') {
     pause.innerText = 'resume';
+    buttonsToggle.forEach(button => (button.disabled = true));
     clearInterval(timeStart);
   } else {
     pause.innerText = 'pause';
+    buttonsToggle.forEach(button => (button.disabled = false));
     timer();
   }
 }
@@ -54,12 +58,20 @@ function timer() {
   timeStart = setInterval(incrementCounter, 1000);
 }
 
-function submitInput() {
-  submit.innerText;
-}
+let formElement = document.querySelector('form');
+let input = document.querySelector('input');
+let commentList = document.querySelector('.comments');
+
+formElement.addEventListener('submit', function(event) {
+  event.preventDefault();
+  let p = document.createElement('p');
+  p.innerText = input.value;
+  commentList.appendChild(p);
+  formElement.reset();
+  debugger;
+});
 
 plus.addEventListener('click', incrementCounter);
 minus.addEventListener('click', decrementCounter);
 like.addEventListener('click', addLike);
 pause.addEventListener('click', interrupt);
-submit.addEventListener('click', submitInput);
