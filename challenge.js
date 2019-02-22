@@ -23,10 +23,11 @@ function decrementCounter() {
 likes = {};
 
 function addLike() {
-  if (counter in likes) {
-    likes[counter]++;
+  if (counter.innerText in likes) {
+    // debugger;
+    likes[counter.innerText] += 1;
   } else {
-    likes[counter] = 1;
+    likes[counter.innerText] = 1;
   }
 
   ulElement.innerText = '';
@@ -65,10 +66,11 @@ let commentList = document.querySelector('.comments');
 formElement.addEventListener('submit', function(event) {
   event.preventDefault();
   let p = document.createElement('p');
+  // debugger;
   p.innerText = input.value;
   commentList.appendChild(p);
   formElement.reset();
-  debugger;
+  // debugger;
 });
 
 plus.addEventListener('click', incrementCounter);
